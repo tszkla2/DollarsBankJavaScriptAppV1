@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tszkla2/DollarsBankJavaScriptAppV1/issues"
   },
-  "homepage": "https://github.com/tszkla2/DollarsBankJavaScriptAppV1#readme"
+  "homepage": "https://github.com/tszkla2/DollarsBankJavaScriptAppV1#readme",
+  "dependencies": {
+    "colors": "^1.4.0"
+  }
 }
