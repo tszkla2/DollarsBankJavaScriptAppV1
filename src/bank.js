@@ -249,7 +249,7 @@ const functions = {
         });
     },
 
-
+    //FUNCTION TO TRANSFER MONEY TO DIFFERENT ACCOUNTS
     transfer: function(){
         var rl = readline.createInterface(process.stdin, process.stdout);
         var idFound = false;
@@ -302,6 +302,7 @@ const functions = {
         });
     },
 
+    //FUNCTION TO SHOW THE TRANSACTION HISTORY FOR EACH ACCOUNT
     showHistory: function(){
         console.log('+----------------------+'.blue);
         console.log('|        HISTORY       |'.blue);
