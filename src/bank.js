@@ -1,17 +1,20 @@
 var readline = require('readline');
 // https://www.npmjs.com/package/colors
 var colors = require('colors');
+var loggedInUser = 0;
 
+//ARRAY WHERE THE ACCOUNT INFORMATION IS STORED
 var list = [
     {name: 'Tom', address: '123 Drive', phoneNumber: '123-456-7890', accountID: '001', password: 'password', balance: 500},
     {name: 'Bill', address: '456 Drive', phoneNumber: '987-654-3210', accountID: '002', password: 'password', balance: 100}
 ];
-var loggedInUser = 0;
+//ARRAY WHERE THE TRANSACTION HISTORY IS STORED
 var history = [
     {accountID: 001, balance: 500, message: 'Initial Amount of $500 added to account 001. Balance = $500'},
     {accountID: 002, balance: 100, message: 'Initial Amount of $100 added to account 002. Balance = $100'}
 ];
 
+//START OF BANKING APP MENUS
 const functions = {
      //FUNCTION FOR DISPLAYING THE START MENU
      startMenu: function(){
@@ -182,7 +185,7 @@ const functions = {
         });
     },
 
-    //MENU AFTER YOU LOG IN
+    //MENU FOR DISPLAYING ACCOUNT INFORMATION
     displayInformation: function(){
         console.log('+----------------------+'.blue);
         console.log('|        Account       |'.blue);
@@ -255,7 +258,7 @@ const functions = {
 
         console.log('');
         rl.question('Enter account ID that you would like to transfer to: '.green, (answer1) => {
-            rl.question('Enter the amount you would like to transfer to '.green + list[transferUser].accountID + ': ', (answer2) => {
+            rl.question('Enter the amount you would like to transfer to '.green + answer1 + ': ', (answer2) => {
                 for(var i=0; i<list.length; i++){
                     if(answer1 == list[i].accountID){
                         console.log('Account ID found'.yellow);
@@ -270,31 +273,40 @@ const functions = {
                     console.log('ACCOUNT ID NOT FOUND IN SYSTEM!!!'.red)
                     console.log('');
                     rl.close();
-                    functions.transfer();
+                    functions.loginMenu();
                 }   
 
-                if(answer2 <= list[loggedInUser].balance && answer2 >= 0) {
-                    transferError = true;
+                if(idFound == true){
+                    if(answer2 <= list[loggedInUser].balance && answer2 >= 0) {
                     list[loggedInUser].balance -= parseInt(answer2);
                     list[transferUser].balance += parseInt(answer2);
                     console.log('Amount transfered from your account: '.yellow + answer2);
                     console.log('New balance: $'.yellow + list[loggedInUser].balance);
                     console.log('');
+                    history.push({accountID: list[loggedInUser].accountID, balance: list[loggedInUser].balance, message: 'Transfered Amount of $' + answer2 + ' to account ' + list[transferUser].accountID +  '. Balance = $' + list[loggedInUser].balance});
+                    history.push({accountID: list[transferUser].accountID, balance: list[transferUser].balance, message: 'Recieved Transfered Amount of $' + answer2 + ' from account ' + list[loggedInUser].accountID +  '. Balance = $' + list[transferUser].balance});
                     rl.close();
+                    transferError = true;
                     functions.loginMenu();
-                }
-
-                if(transferError = false){
+                    } 
+                    
+                    if(transferError == false){
                     console.log('Enter a positive amount! Make sure you transfer less than or equal to your balance!'.red);
                     console.log('');
                     rl.close();
-                    functions.transfer();
+                    functions.loginMenu();
                 }
+                }
+                
             });
         });
     },
 
     showHistory: function(){
+        console.log('+----------------------+'.blue);
+        console.log('|        HISTORY       |'.blue);
+        console.log('+----------------------+'.blue);
+        
         for(var i=0; i<history.length; i++){
             if(history[i].accountID == list[loggedInUser].accountID){
                 console.log(history[i].message.magenta);
