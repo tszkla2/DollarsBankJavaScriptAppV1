@@ -1,12 +1,8 @@
-var readline = require('readline');
-var colors = require('colors');
+const readline = require('readline');
+const colors = require('colors');
+const run = require('./src/bank.js');
 
-var menu = require('./src/application_menu');
+console.log('APP.JS IS WORKING'.magenta);
 
-// console.log('red'.red);
-// console.log('yellow'.yellow);
-// console.log('green'.green);
-// console.log('blue'.blue);
-// console.log('magenta'.magenta);
-// console.log('white'.white);
+run.startMenu();
 
